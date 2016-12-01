@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>7 Day Forecast</title>
+
+	<!-- !CSS -->
+	<link href="css/html5reset.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css"/>
+
+	<!-- Source from CDN less latency -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
+	<script src="js/script.js"></script>
+</head>
+
+<body ng-app="7dayFcstApp" ng-controller='forecastController' ng-init="getInit()" style="width: 400px">
+	<h1>Select location</h1>
+	<select ng-model="curExp" ng-options="experience.name for experience in experiences" ng-click="getConfig(curExp)"></select>
+	<button ng-click="getForecast(ottConfig)">Get forecast from SUN</button>
+	<br><br>
+	<audio autoplay loop>
+		<source src="http://d22owldznd5yor.cloudfront.net/content/audio/backgroundMusic/weather/CloudsMayCome90_LOT8andLOGO.wav" type="audio/vnd.wave">
+		Your browser does not support audio tag.
+	</audio>
+	<div id="containner">
+		<video width="1280" height="720" autoplay loop>
+			<source src="http://d22owldznd5yor.cloudfront.net/content/video/backgrounds/BGWeather.mp4">
+			your browser does not support video tag.
+		</video>
+		<div id="top">
+			{{ottConfig.response.primaryLoc.locName | uppercase}} 7 DAY FORECAST
+		</div>
+		<div id="logo">
+			<img src="http://d22owldznd5yor.cloudfront.net/content/image/providerLogos/TWC.png" alt="TWC Logo" width="70" height="70">
+		</div>
+		<div id="clock" clk-directive ng-style="{top: (720-40) + 'px'}"></div>
+		<div class="dayTomestone" ng-repeat="i in days" ng-class="{'weekend': weekendDays[i]}" ng-style="{'left': (35 + i * 175) + 'px', 'background-color': backgroundColor}" tome-stone></div>
+	</div>
+</body>
+
+</html>
